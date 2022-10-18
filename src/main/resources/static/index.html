@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
@@ -12,30 +13,63 @@
     <title>Whiskers</title>
 </head>
 <body>
-    <div class="container" ng-controller="indexController">
-        <h1>Petshop online</h1>
-        <h3>Список товаров</h3>
-        <table class="table table-hover" >
+<div class="container" ng-controller="indexController">
+    <h1>Petshop online</h1>
+    <!--        <button type="button" class="btn btn-dark" ng-click="getPwd">pwd</button>-->
+    <h3>Список товаров</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>ИД</td>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Описание</td>
+            <td>...</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in productsList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.description}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-info" ng-click="showProductInfo(p.id)">
+                    <i class="bi bi-question"></i>
+                </button>
+                <button type="button" class="btn btn-success" ng-click="addProductToCart(p.id)">
+                    <i class="bi bi-cart-plus"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="container">
+        <h3>Корзина</h3>
+
+        <table class="table table-hover">
             <tr>
                 <td>ИД</td>
                 <td>Название</td>
                 <td>Цена</td>
-                <td>Описание</td>
-                <td>...</td>
+                <td>Дата добавления</td>
+                <td></td>
             </tr>
             <tbody>
-            <tr ng-repeat="p in productsList">
-                <td>{{p.id}}</td>
-                <td>{{p.title}}</td>
-                <td>{{p.description}}</td>
-                <td>{{p.price}}</td>
+            <tr ng-repeat="cp in cartProducts">
+                <td>{{cp.id}}</td>
+                <td>{{cp.title}}</td>
+                <td>{{cp.description}}</td>
+                <td>{{date}}</td>
                 <td>
-                    <button type="button" class="btn btn-info" ng-click="showProductInfo(p.id)">Info</button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteProductFromCart(cp.id)">
+                        <i class="bi bi-cart-dash"></i>
+                    </button>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+</div>
 
 </body>
 </html>
