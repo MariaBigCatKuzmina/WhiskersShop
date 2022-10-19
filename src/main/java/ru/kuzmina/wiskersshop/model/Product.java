@@ -2,8 +2,11 @@ package ru.kuzmina.wiskersshop.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
@@ -24,4 +27,16 @@ public class Product {
 
     @Column(name="price")
     private Double price;
+
+//    @ManyToOne(joinColumn="category_id")
+//    private Category category;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime created_at;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updated_at;
+
 }
