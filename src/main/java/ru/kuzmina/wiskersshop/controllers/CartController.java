@@ -2,7 +2,7 @@ package ru.kuzmina.wiskersshop.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.kuzmina.wiskersshop.model.dtos.Cart;
+import ru.kuzmina.wiskersshop.model.Cart;
 import ru.kuzmina.wiskersshop.services.CartService;
 
 
@@ -25,12 +25,12 @@ public class CartController {
 
     @GetMapping("/delete/{id}")
     public void deleteProductFromCart(@PathVariable(name = "id") Long productId) {
-        cartService.delete(productId, false);
+        cartService.decrease(productId);
     }
 
     @GetMapping("/delete/all/{id}")
     public void deleteAllProductsById(@PathVariable Long id){
-        cartService.delete(id, true);
+        cartService.remove(id);
     }
 
     @GetMapping("/clear")

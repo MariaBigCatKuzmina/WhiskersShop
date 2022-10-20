@@ -1,12 +1,9 @@
-package ru.kuzmina.wiskersshop.model.dtos;
+package ru.kuzmina.wiskersshop.model;
 
 import lombok.Data;
-import ru.kuzmina.wiskersshop.model.Product;
+import ru.kuzmina.wiskersshop.exceptions.ResourceNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 public class Cart {
@@ -23,36 +20,37 @@ public class Cart {
     }
 
     public void add(Product product) {
-        CartItem item = findById(product.getId());
-        if (item != null) {
-            item.setQuantity(item.getQuantity() + 1);
-            item.setTotalPrice(item.getTotalPrice() + product.getPrice());
+        Optional<CartItem> item = findById(product.getId());
+        if (item.isPresent()) {
+            item.get().changeQuantity(1);
         } else {
             items.add(new CartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
         }
         recalculate();
     }
 
-    public void delete(Product product, Boolean all){
-        CartItem item = findById(product.getId());
-        if (item != null) {
-            if (item.getQuantity() > 1 && !all) {
-                item.setQuantity(item.getQuantity() - 1);
-                item.setTotalPrice(item.getTotalPrice() - product.getPrice());
-            } else {
-                items.remove(item);
-            }
+    public void decrease(Long productId) {
+        CartItem item = findById(productId).orElseThrow(() -> new ResourceNotFoundException("товар в корзинене найден id: " + productId));
+        if (item.getQuantity() > 1) {
+            item.changeQuantity(-1);
+            recalculate();
+            return;
+        }
+        remove(productId);
+    }
+    public void remove(Long productId) {
+        if (items.removeIf(item -> item.getProductId().equals(productId))) {
             recalculate();
         }
     }
 
-    private CartItem findById(Long productId) {
+    private Optional<CartItem> findById(Long productId) {
         for (CartItem item : items) {
             if (Objects.equals(item.getProductId(), productId)) {
-                return item;
+                return Optional.of(item);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     private void recalculate() {

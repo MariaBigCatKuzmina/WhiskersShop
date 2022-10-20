@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.kuzmina.wiskersshop.model.Order;
 import ru.kuzmina.wiskersshop.model.OrderDetails;
 import ru.kuzmina.wiskersshop.model.User;
-import ru.kuzmina.wiskersshop.model.dtos.Cart;
-import ru.kuzmina.wiskersshop.model.dtos.CartItem;
+import ru.kuzmina.wiskersshop.model.Cart;
+import ru.kuzmina.wiskersshop.model.CartItem;
 import ru.kuzmina.wiskersshop.repositories.OrderRepository;
 import ru.kuzmina.wiskersshop.utils.JwtTokenUtil;
 

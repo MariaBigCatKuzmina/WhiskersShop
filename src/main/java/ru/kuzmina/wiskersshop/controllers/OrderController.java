@@ -2,10 +2,9 @@ package ru.kuzmina.wiskersshop.controllers;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import ru.kuzmina.wiskersshop.model.Order;
-import ru.kuzmina.wiskersshop.model.dtos.Cart;
+import ru.kuzmina.wiskersshop.model.Cart;
 import ru.kuzmina.wiskersshop.services.OrderService;
 
 import java.util.List;

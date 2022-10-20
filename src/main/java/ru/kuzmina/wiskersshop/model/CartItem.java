@@ -1,4 +1,4 @@
-package ru.kuzmina.wiskersshop.model.dtos;
+package ru.kuzmina.wiskersshop.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +15,8 @@ public class CartItem {
     private Double productPrice;
     private Double totalPrice;
 
+    public void changeQuantity(Integer delta) {
+        quantity += delta;
+        totalPrice = productPrice * quantity;
+    }
 }

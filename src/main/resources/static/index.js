@@ -1,7 +1,7 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/petshop';
     const apiVersion = '/api/v1';
-    const cartPath =  + apiVersion + '/cart';
+    const cartPath =  apiVersion + '/cart';
     const productsPath = apiVersion + '/products';
 
     $scope.loadProducts = function () {
