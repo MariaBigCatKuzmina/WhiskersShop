@@ -12,3 +12,6 @@ spring:
     password: admin
 volumes:
   my-db:
+jwt:
+  secret: lkjh89jnbvvujnjh87t6r5fhgb9k00
+  lifetime: 360000000
