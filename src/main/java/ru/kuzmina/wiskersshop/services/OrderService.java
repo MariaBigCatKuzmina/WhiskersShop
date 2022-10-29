@@ -3,15 +3,13 @@ package ru.kuzmina.wiskersshop.services;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.kuzmina.wiskersshop.model.Order;
-import ru.kuzmina.wiskersshop.model.OrderDetails;
-import ru.kuzmina.wiskersshop.model.User;
-import ru.kuzmina.wiskersshop.model.Cart;
-import ru.kuzmina.wiskersshop.model.CartItem;
+import ru.kuzmina.wiskersshop.exceptions.ResourceNotFoundException;
+import ru.kuzmina.wiskersshop.model.*;
 import ru.kuzmina.wiskersshop.repositories.OrderRepository;
 import ru.kuzmina.wiskersshop.utils.JwtTokenUtil;
 
-import java.time.LocalDateTime;
+import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -21,23 +19,26 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
-    private final OrderDetailService orderDetailService;
+    private final OrderItemService orderDetailService;
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
+    private final CartService cartService;
 
-    public Long formOrder(Cart cart, String token) {
-       // if (token.contains("Bearer ")) {
-            List<CartItem> items = cart.getItems();
-//            User user = userService.findByUsername(jwtTokenUtil.getUsernameFromToken(token.substring(7))).get();
-            User user = userService.findByUsername("user_Ivan").get();
-            Order order = orderRepository.save(new Order(LocalDateTime.now(), cart.getTotalPrice(), user));
-            for (CartItem item : items) {
-                productService.findById(item.getProductId())
-                        .ifPresent(product -> orderDetailService.save(new OrderDetails(item.getQuantity(), item.getProductPrice(), order, product)));
-            }
-//        }
+
+    @Transactional
+    public Long formOrder(Principal principal) {
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден: " + principal.getName()));
+        Order order = new Order();
+        Cart currentCart = cartService.getCurrentCart();
+        order.setUser(user);
+        order.setOrderPrice(currentCart.getTotalPrice());
+        orderRepository.save(order);
+        currentCart.getItems()
+                .stream()
+                .map(cartItem -> new OrderItem(null, cartItem.getQuantity(), cartItem.getProductPrice(),
+                        order, productService.findById(cartItem.getProductId()).get(), null, null))
+                .forEach(orderDetailService::save);
         return order.getId();
-
     }
 
     public List<Order> getAllOrders() {

@@ -2,31 +2,29 @@ package ru.kuzmina.wiskersshop.controllers;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.kuzmina.wiskersshop.model.Order;
-import ru.kuzmina.wiskersshop.model.Cart;
 import ru.kuzmina.wiskersshop.services.OrderService;
+import ru.kuzmina.wiskersshop.services.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @Data
 @RequiredArgsConstructor
 @RequestMapping("api/v1/orders")
+@Slf4j
 public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/add")
-    public Long addOrder(@RequestBody Cart cart) {
-        return orderService.formOrder(cart, "token");
+    @ResponseStatus(HttpStatus.CREATED)
+    public Long addOrder(Principal principal) {
+        return orderService.formOrder(principal);
     }
 
-    @GetMapping()
-    public List<Order> getAllOrders(){
-        return orderService.getAllOrders();
-    }
-//    @PostMapping("/add")
-//    public void addOrder(@RequestBody Cart cart, @RequestHeader(name= HttpHeaders.AUTHORIZATION) String token) {
-//        orderService.formOrder(cart, token);
-//    }
+
 }
