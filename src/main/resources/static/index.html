@@ -14,15 +14,16 @@
 </head>
 <body>
 <div class="container" ng-controller="indexController">
-    <h1>Petshop online</h1>
-    <!--        <button type="button" class="btn btn-dark" ng-click="getPwd">pwd</button>-->
+    <div class="text-center">
+        <h1>"Whiskers" - интернет магазин товаров для животных</h1>
+    </div>
     <h3>Список товаров</h3>
     <table class="table table-hover">
         <tr>
             <td>ИД</td>
             <td>Название</td>
-            <td>Цена</td>
             <td>Описание</td>
+            <td>Цена</td>
             <td>...</td>
         </tr>
         <tbody>
@@ -43,28 +44,48 @@
         </tbody>
     </table>
 
-    <div class="container">
-        <h3>Корзина</h3>
+    <div>
+        <h3>
+            Корзина
+            <button type="button" class="btn btn-danger ms-2" ng-click="clearCart()">
+                Очистить
+            </button>
+            <button type="button" class="btn btn-success ms-2" ng-click="formOrder()">
+                Оформить заказ
+            </button>
+        </h3>
 
         <table class="table table-hover">
             <tr>
                 <td>ИД</td>
                 <td>Название</td>
+                <td>Количество</td>
                 <td>Цена</td>
-                <td>Дата добавления</td>
                 <td></td>
             </tr>
             <tbody>
-            <tr ng-repeat="cp in cartProducts">
-                <td>{{cp.id}}</td>
-                <td>{{cp.title}}</td>
-                <td>{{cp.description}}</td>
-                <td>{{date}}</td>
+            <tr ng-repeat="item in currentCart.items">
+                <td>{{item.productId}}</td>
+                <td>{{item.productTitle}}</td>
                 <td>
-                    <button type="button" class="btn btn-danger" ng-click="deleteProductFromCart(cp.id)">
-                        <i class="bi bi-cart-dash"></i>
+                    <button type="button" class="btn btn-light mr-2" ng-click="deleteProductFromCart(item.productId)">
+                        <i class="bi bi-dash"></i>
+                    </button>
+                    {{item.quantity}}
+                    <button type="button" class="btn btn-light ml-2" ng-click="addProductToCart(item.productId)">
+                        <i class="bi bi-plus"></i>
                     </button>
                 </td>
+                <td>{{item.productPrice + 'x' + item.quantity + '=' + item.totalPrice}}</td>
+                <td>
+                    <button type="button" class="btn btn-danger" ng-click="deleteAllProductsOfTypeFromCart(item.productId)">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>Стоимость корзины:</td>
+                <td colspan="4" class="text-right">{{currentCart.totalPrice}}</td>
             </tr>
             </tbody>
         </table>
