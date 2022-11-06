@@ -1,8 +1,12 @@
 CREATE TABLE IF NOT EXISTS users
 (
-    id       BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255)  NOT NULL,
-    password VARCHAR(1024) NOT NULL,
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username   VARCHAR(255)  NOT NULL,
+    password   VARCHAR(1024) NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     CONSTRAINT UK_username UNIQUE (username)
 );
 
@@ -129,26 +133,37 @@ CREATE TABLE IF NOT EXISTS cart_products
 
 CREATE TABLE IF NOT EXISTS deliveries
 (
-    id      BIGINT AUTO_INCREMENT PRIMARY KEY,
-    type    VARCHAR(50)  NOT NULL,
-    address VARCHAR(400) NOT NULL
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    type       VARCHAR(50)  NOT NULL,
+    address    VARCHAR(400) NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE IF NOT EXISTS payments
 (
-    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
-    type VARCHAR(255) NOT NULL,
-    sum  DOUBLE       NOT NULL
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    type       VARCHAR(255) NOT NULL,
+    sum        DOUBLE       NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE IF NOT EXISTS orders
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    order_date  Date   NOT NULL,
     user_id     BIGINT NOT NULL,
     delivery_id BIGINT,
     payment_id  BIGINT,
-    sum         DOUBLE NOT NULL,
+    total_price DOUBLE NOT NULL,
+
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     CONSTRAINT UK_delivery UNIQUE (delivery_id),
     CONSTRAINT UK_payment UNIQUE (payment_id),
     CONSTRAINT FK_delivery FOREIGN KEY (delivery_id) REFERENCES deliveries (id),
@@ -157,15 +172,19 @@ CREATE TABLE IF NOT EXISTS orders
 );
 
 
-CREATE TABLE IF NOT EXISTS order_details
+CREATE TABLE IF NOT EXISTS order_items
 (
-    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    order_id   BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    quantity   INT    NOT NULL DEFAULT 1,
-    price      DOUBLE NOT NULL,
-    CONSTRAINT FK_order_orderdetails FOREIGN KEY (order_id) REFERENCES orders (id),
-    CONSTRAINT FK_product_orderdetails FOREIGN KEY (product_id) REFERENCES products (id)
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_id      BIGINT NOT NULL,
+    product_id    BIGINT NOT NULL,
+    quantity      INT    NOT NULL DEFAULT 1,
+    product_price DOUBLE NOT NULL,
+
+    created_at    TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT FK_order_orderditems FOREIGN KEY (order_id) REFERENCES orders (id),
+    CONSTRAINT FK_product_orderitems FOREIGN KEY (product_id) REFERENCES products (id)
 );
 
 
