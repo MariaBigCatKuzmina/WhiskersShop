@@ -16,20 +16,21 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", length = 1000 )
+    @Column(name = "description", length = 1000)
     private String description;
 
-    @Column(name="price")
+    @Column(name = "price")
     private Double price;
 
-//    @ManyToOne(joinColumn="category_id")
-//    private Category category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @CreationTimestamp
     @Column(name = "created_at")

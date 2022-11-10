@@ -1,21 +1,23 @@
-package ru.kuzmina.whiskersshop.controllers;
+package ru.kuzmina.whiskersshop.carts.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.kuzmina.whiskersshop.model.Cart;
-import ru.kuzmina.whiskersshop.services.CartService;
+import ru.kuzmina.whiskersshop.api.dtos.CartDto;
+import ru.kuzmina.whiskersshop.carts.converters.CartConverter;
+import ru.kuzmina.whiskersshop.carts.services.CartService;
 
 
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
-
+@CrossOrigin("*")
 public class CartController {
     private final CartService cartService;
+    private final CartConverter cartConverter;
 
     @GetMapping
-    public Cart getCurrent() {
-        return cartService.getCurrentCart();
+    public CartDto getCurrent() {
+        return cartConverter.cartToDto(cartService.getCurrentCart()) ;
     }
 
     @GetMapping("/add/{id}")

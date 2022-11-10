@@ -1,4 +1,4 @@
-package ru.kuzmina.whiskersshop.model;
+package ru.kuzmina.whiskersshop.carts.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

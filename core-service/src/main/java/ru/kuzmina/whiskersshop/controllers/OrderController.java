@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.kuzmina.whiskersshop.exceptions.ResourceNotFoundException;
+import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 import ru.kuzmina.whiskersshop.model.User;
 import ru.kuzmina.whiskersshop.services.OrderService;
 import ru.kuzmina.whiskersshop.services.UserService;

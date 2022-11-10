@@ -1,7 +1,8 @@
-package ru.kuzmina.whiskersshop.model;
+package ru.kuzmina.whiskersshop.carts.model;
 
 import lombok.Data;
-import ru.kuzmina.whiskersshop.exceptions.ResourceNotFoundException;
+import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
+import ru.kuzmina.whiskersshop.api.dtos.ProductDto;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class Cart {
         return Collections.unmodifiableList(items);
     }
 
-    public void add(Product product) {
+    public void add(ProductDto product) {
         Optional<CartItem> item = findById(product.getId());
         if (item.isPresent()) {
             item.get().changeQuantity(1);
@@ -38,6 +39,7 @@ public class Cart {
         }
         remove(productId);
     }
+
     public void remove(Long productId) {
         if (items.removeIf(item -> item.getProductId().equals(productId))) {
             recalculate();

@@ -1,13 +1,13 @@
-package ru.kuzmina.whiskersshop;
+package ru.kuzmina.whiskersshop.carts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class  WhiskersShopApplication {
+public class  WhiskersShopCartsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WhiskersShopApplication.class, args);
+        SpringApplication.run(WhiskersShopCartsApplication.class, args);
     }
 
 }

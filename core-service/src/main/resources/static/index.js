@@ -1,7 +1,7 @@
 angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8189/petshop';
     const apiVersion = '/api/v1';
-    const cartPath = apiVersion + '/cart';
+    const cartPath = 'http://localhost:8190/whiskers-petshop-carts' + apiVersion + '/cart';
     const productsPath = apiVersion + '/products';
 
     $scope.tryToAuth = function () {
@@ -82,44 +82,45 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     };
 
     $scope.getCartProducts = function () {
-        $http.get(contextPath + cartPath).then(function (response) {
+        $http.get(cartPath).then(function (response) {
             $scope.currentCart = response.data;
         });
     };
 
     $scope.addProductToCart = function (id) {
-        $http.get(contextPath + cartPath + '/add/' + id).then(function () {
+        $http.get(cartPath + '/add/' + id).then(function () {
             $scope.getCartProducts();
         });
     };
 
     $scope.deleteProductFromCart = function (id) {
-        $http.get(contextPath + cartPath + '/delete/' + id).then(function () {
+        $http.get(cartPath + '/delete/' + id).then(function () {
             $scope.getCartProducts();
         });
     };
 
     $scope.deleteAllProductsOfTypeFromCart = function (id) {
-        $http.get(contextPath + cartPath + '/delete/all/' + id).then(function () {
+        $http.get(cartPath + '/delete/all/' + id).then(function () {
             $scope.getCartProducts();
         });
     };
 
     $scope.clearCart = function () {
-        $http.get(contextPath + cartPath + '/clear').then(function () {
+        $http.get(cartPath + '/clear').then(function () {
             $scope.getCartProducts();
         });
     };
 
     $scope.formOrder = function () {
         $http.post(contextPath + apiVersion + '/orders/add', null).then(function (response) {
-            $scope.clearCart();
+         //   $scope.clearCart();
+            $scope.getCartProducts();
             alert("id заказа: " + response.data);
         })
     };
 
     $scope.isCartEmpty = function () {
-        return $scope.currentCart.items.length <= 0;
+        return ($scope.currentCart == null) || ($scope.currentCart.items.length <= 0);
     }
 
     $scope.loadProducts();

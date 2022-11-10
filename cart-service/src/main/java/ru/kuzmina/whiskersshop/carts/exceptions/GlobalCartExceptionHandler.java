@@ -1,4 +1,4 @@
-package ru.kuzmina.whiskersshop.exceptions;
+ package ru.kuzmina.whiskersshop.carts.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 
 @ControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class GlobalCartExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<AppError> catchResourceNotFoundException(ResourceNotFoundException e){
         log.error(e.getMessage(), e);

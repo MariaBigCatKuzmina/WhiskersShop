@@ -2,7 +2,7 @@ package ru.kuzmina.whiskersshop.soap.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.kuzmina.whiskersshop.exceptions.ResourceNotFoundException;
+import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 import ru.kuzmina.whiskersshop.model.Product;
 import ru.kuzmina.whiskersshop.repositories.ProductRepository;
 import ru.kuzmina.whiskersshop.soap.soapProducts.SoapProduct;
