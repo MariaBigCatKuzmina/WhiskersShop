@@ -1,0 +1,21 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /petshop
+spring:
+  jpa:
+    database: mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/whiskers_petshop?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: admin
+volumes:
+  my-db:
+jwt:
+  secret: lkjh89jnbvvujnjh87t6r5fhgb9k00
+  lifetime: 360000000
+integration:
+  paths:
+    get-cart: "http://localhost:8190/whiskers-petshop-carts/api/v1/cart"
+    clear-cart: "http://localhost:8190/whiskers-petshop-carts/api/v1/cart/clear"
