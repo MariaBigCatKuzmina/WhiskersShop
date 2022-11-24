@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -12,11 +13,11 @@ public class CartItem {
     private Long productId;
     private String productTitle;
     private Integer quantity;
-    private Double productPrice;
-    private Double totalPrice;
+    private BigDecimal productPrice;
+    private BigDecimal totalPrice;
 
     public void changeQuantity(Integer delta) {
         quantity += delta;
-        totalPrice = productPrice * quantity;
+        totalPrice = productPrice.multiply(BigDecimal.valueOf(quantity));
     }
 }

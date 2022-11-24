@@ -7,9 +7,7 @@ import ru.kuzmina.whiskersshop.api.dtos.CartDto;
 import ru.kuzmina.whiskersshop.integrations.CartServiceIntegration;
 import ru.kuzmina.whiskersshop.model.Order;
 import ru.kuzmina.whiskersshop.model.OrderItem;
-import ru.kuzmina.whiskersshop.model.User;
 import ru.kuzmina.whiskersshop.repositories.OrderRepository;
-import ru.kuzmina.whiskersshop.utils.JwtTokenUtil;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,14 +20,13 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final OrderItemService orderDetailService;
-    private final JwtTokenUtil jwtTokenUtil;
     private final CartServiceIntegration cartService;
 
     @Transactional
-    public Long formOrder(User user) {
+    public Long formOrder(String username) {
         Order order = new Order();
         CartDto currentCart = cartService.getCurrentCart();
-        order.setUser(user);
+        order.setUsername(username);
         order.setOrderPrice(currentCart.getTotalPrice());
         List<OrderItem> orderItems = currentCart.getItems()
                 .stream()
@@ -38,7 +35,7 @@ public class OrderService {
                 .toList();
         order.setOrderItemsList(orderItems);
         orderRepository.save(order);
-         cartService.clear();
+        cartService.clear();
         return order.getId();
     }
 

@@ -1,19 +1,28 @@
 package ru.kuzmina.whiskersshop.carts.integrations;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 import ru.kuzmina.whiskersshop.api.dtos.ProductDto;
-
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class ProductServiceIntegration {
-    private final RestTemplate restTemplate;
+    private final WebClient productServiceWebClient;
 
-    public Optional<ProductDto> findById(Long id){
-        return Optional.ofNullable(restTemplate.getForObject("http://localhost:8189/petshop/api/v1/products/" + id, ProductDto.class));
-
+    public ProductDto findById(Long id) {
+        return productServiceWebClient.get()
+                .uri("/api/v1/products/" + id)
+                .retrieve()
+                .onStatus(
+                        httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
+                        clientResponse -> Mono.error(new ResourceNotFoundException("Товар не найден в продуктовом МС"))
+                )
+                // .onStatus(HttpStatus::is4xxClientError)
+                .bodyToMono(ProductDto.class)
+                .block();
     }
 }

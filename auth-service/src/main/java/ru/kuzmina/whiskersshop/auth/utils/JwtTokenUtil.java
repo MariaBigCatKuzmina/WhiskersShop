@@ -1,4 +1,4 @@
-package ru.kuzmina.whiskersshop.utils;
+package ru.kuzmina.whiskersshop.auth.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

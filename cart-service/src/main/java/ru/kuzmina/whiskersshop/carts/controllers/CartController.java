@@ -10,14 +10,14 @@ import ru.kuzmina.whiskersshop.carts.services.CartService;
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class CartController {
     private final CartService cartService;
     private final CartConverter cartConverter;
 
     @GetMapping
     public CartDto getCurrent() {
-        return cartConverter.cartToDto(cartService.getCurrentCart()) ;
+        return cartConverter.cartToDto(cartService.getCurrentCart());
     }
 
     @GetMapping("/add/{id}")

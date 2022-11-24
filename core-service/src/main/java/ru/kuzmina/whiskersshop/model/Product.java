@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,8 +26,8 @@ public class Product {
     @Column(name = "description", length = 1000)
     private String description;
 
-    @Column(name = "price")
-    private Double price;
+    @Column(name = "price", precision = 12, scale = 2)
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

@@ -23,7 +23,7 @@ public class SoapProductService {
         soapProduct.setId(product.getId());
         soapProduct.setTitle(product.getTitle());
         soapProduct.setDescription(product.getDescription());
-        soapProduct.setPrice(BigDecimal.valueOf(product.getPrice()));
+        soapProduct.setPrice(product.getPrice());
         return soapProduct;
     };
 

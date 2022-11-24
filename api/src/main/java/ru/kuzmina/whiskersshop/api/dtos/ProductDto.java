@@ -1,11 +1,13 @@
 package ru.kuzmina.whiskersshop.api.dtos;
 
+import java.math.BigDecimal;
+
 public class  ProductDto {
 
     private Long id;
     private String title;
     private String description;
-    private Double price;
+    private BigDecimal price;
     private String categoryTitle;
 
     public String getCategoryTitle() {
@@ -28,7 +30,7 @@ public class  ProductDto {
         return description;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -44,7 +46,7 @@ public class  ProductDto {
         this.description = description;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

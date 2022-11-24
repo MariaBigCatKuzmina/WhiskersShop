@@ -1,38 +1,38 @@
-CREATE TABLE IF NOT EXISTS users
-(
-    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username   VARCHAR(255)  NOT NULL,
-    password   VARCHAR(1024) NOT NULL,
-
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT UK_username UNIQUE (username)
-);
-
-CREATE TABLE user_contacts
-(
-    id      BIGINT AUTO_INCREMENT PRIMARY KEY,
-    type    VARCHAR(255) NOT NULL,
-    value   VARCHAR(500) NOT NULL,
-    user_id BIGINT       NOT NULL,
-    CONSTRAINT FK_user_contacts FOREIGN KEY (user_id) REFERENCES users (id)
-);
-
-CREATE TABLE IF NOT EXISTS roles
-(
-    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS users_roles
-(
-    user_id BIGINT NOT NULL,
-    role_id BIGINT NOT NULL,
-    PRIMARY KEY (user_id, role_id),
-    CONSTRAINT FK_user_roles FOREIGN KEY (user_id) REFERENCES users (id),
-    CONSTRAINT FK_role_roles FOREIGN KEY (role_id) REFERENCES roles (id)
-);
+# CREATE TABLE IF NOT EXISTS users
+# (
+#     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+#     username   VARCHAR(255)  NOT NULL,
+#     password   VARCHAR(1024) NOT NULL,
+#
+#     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+#     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+#
+#     CONSTRAINT UK_username UNIQUE (username)
+# );
+#
+# CREATE TABLE user_contacts
+# (
+#     id      BIGINT AUTO_INCREMENT PRIMARY KEY,
+#     type    VARCHAR(255) NOT NULL,
+#     value   VARCHAR(500) NOT NULL,
+#     user_id BIGINT       NOT NULL,
+#     CONSTRAINT FK_user_contacts FOREIGN KEY (user_id) REFERENCES users (id)
+# );
+#
+# CREATE TABLE IF NOT EXISTS roles
+# (
+#     id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+#     name VARCHAR(50) NOT NULL
+# );
+#
+# CREATE TABLE IF NOT EXISTS users_roles
+# (
+#     user_id BIGINT NOT NULL,
+#     role_id BIGINT NOT NULL,
+#     PRIMARY KEY (user_id, role_id),
+#     CONSTRAINT FK_user_roles FOREIGN KEY (user_id) REFERENCES users (id),
+#     CONSTRAINT FK_role_roles FOREIGN KEY (role_id) REFERENCES roles (id)
+# );
 
 CREATE TABLE IF NOT EXISTS categories
 (
@@ -60,15 +60,15 @@ CREATE TABLE IF NOT EXISTS producers
 CREATE TABLE IF NOT EXISTS products
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title       VARCHAR(255) NOT NULL,
+    title       VARCHAR(255)   NOT NULL,
     description VARCHAR(1000),
 #     photos
-    price       DOUBLE       NOT NULL,
+    price       DECIMAL(12, 2) NOT NULL,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    category_id BIGINT       NOT NULL,
-    producer_id BIGINT       NOT NULL,
+    category_id BIGINT         NOT NULL,
+    producer_id BIGINT         NOT NULL,
     CONSTRAINT FK_category FOREIGN KEY (category_id) REFERENCES categories (id),
     CONSTRAINT FK_producer FOREIGN KEY (producer_id) REFERENCES producers (id)
 );
@@ -91,7 +91,9 @@ CREATE TABLE IF NOT EXISTS products_attributes
 CREATE TABLE IF NOT EXISTS stocks
 (
     id     BIGINT AUTO_INCREMENT PRIMARY KEY,
-    tittle VARCHAR(150)
+    tittle VARCHAR(150),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS stocks_contacts
@@ -100,6 +102,8 @@ CREATE TABLE IF NOT EXISTS stocks_contacts
     type     VARCHAR(50)  NOT NULL,
     value    VARCHAR(500) NOT NULL,
     stock_id BIGINT       NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FK_stock_contacts FOREIGN KEY (stock_id) REFERENCES stocks (id)
 );
 
@@ -109,7 +113,8 @@ CREATE TABLE IF NOT EXISTS stock_products
     product_id  BIGINT   NOT NULL,
     stock_id    BIGINT   NOT NULL,
     quantity    BIGINT   NOT NULL,
-    last_update DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FK_product_stock FOREIGN KEY (product_id) REFERENCES products (id),
     CONSTRAINT FK_stock_products FOREIGN KEY (stock_id) REFERENCES stocks (id)
 );
@@ -117,9 +122,8 @@ CREATE TABLE IF NOT EXISTS stock_products
 CREATE TABLE IF NOT EXISTS carts
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    last_update DATETIME NOT NULL,
-    user_id     BIGINT   NOT NULL,
-    CONSTRAINT FK_user_carts FOREIGN KEY (user_id) REFERENCES users (id)
+    last_update DATETIME  NOT NULL,
+    username    CHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cart_products
@@ -145,8 +149,8 @@ CREATE TABLE IF NOT EXISTS deliveries
 CREATE TABLE IF NOT EXISTS payments
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    type       VARCHAR(255) NOT NULL,
-    sum        DOUBLE       NOT NULL,
+    type       VARCHAR(255)   NOT NULL,
+    sum        DECIMAL(12, 2) NOT NULL,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -156,10 +160,10 @@ CREATE TABLE IF NOT EXISTS payments
 CREATE TABLE IF NOT EXISTS orders
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id     BIGINT NOT NULL,
+    username    CHAR(255)      NOT NULL,
     delivery_id BIGINT,
     payment_id  BIGINT,
-    total_price DOUBLE NOT NULL,
+    total_price DECIMAL(12, 2) NOT NULL,
 
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -167,21 +171,20 @@ CREATE TABLE IF NOT EXISTS orders
     CONSTRAINT UK_delivery UNIQUE (delivery_id),
     CONSTRAINT UK_payment UNIQUE (payment_id),
     CONSTRAINT FK_delivery FOREIGN KEY (delivery_id) REFERENCES deliveries (id),
-    CONSTRAINT FK_payment FOREIGN KEY (payment_id) REFERENCES payments (id),
-    CONSTRAINT FK_user_orders FOREIGN KEY (user_id) REFERENCES users (id)
+    CONSTRAINT FK_payment FOREIGN KEY (payment_id) REFERENCES payments (id)
 );
 
 
 CREATE TABLE IF NOT EXISTS order_items
 (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
-    order_id      BIGINT NOT NULL,
-    product_id    BIGINT NOT NULL,
-    quantity      INT    NOT NULL DEFAULT 1,
-    product_price DOUBLE NOT NULL,
+    order_id      BIGINT         NOT NULL,
+    product_id    BIGINT         NOT NULL,
+    quantity      INT            NOT NULL DEFAULT 1,
+    product_price DECIMAL(12, 2) NOT NULL,
 
-    created_at    TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
-    updated_at    TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    created_at    TIMESTAMP               DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP               DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT FK_order_orderitems FOREIGN KEY (order_id) REFERENCES orders (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FK_product_orderitems FOREIGN KEY (product_id) REFERENCES products (id)
