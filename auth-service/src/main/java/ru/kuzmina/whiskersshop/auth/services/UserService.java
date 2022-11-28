@@ -1,4 +1,4 @@
-package ru.kuzmina.whiskersshop.services;
+package ru.kuzmina.whiskersshop.auth.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,9 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.kuzmina.whiskersshop.model.Role;
-import ru.kuzmina.whiskersshop.model.User;
-import ru.kuzmina.whiskersshop.repositories.UserRepository;
+import ru.kuzmina.whiskersshop.auth.entities.Role;
+import ru.kuzmina.whiskersshop.auth.entities.User;
+import ru.kuzmina.whiskersshop.auth.repositories.UserRepository;
+
 
 import javax.transaction.Transactional;
 import java.util.Collection;

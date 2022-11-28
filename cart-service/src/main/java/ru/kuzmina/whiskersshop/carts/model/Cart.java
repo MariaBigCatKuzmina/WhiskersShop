@@ -4,16 +4,17 @@ import lombok.Data;
 import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 import ru.kuzmina.whiskersshop.api.dtos.ProductDto;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Data
 public class Cart {
     private List<CartItem> items;
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     public Cart() {
         this.items = new ArrayList<>();
-        totalPrice = 0.0;
+        totalPrice = new BigDecimal("0.0");
     }
 
     public List<CartItem> getItems() {
@@ -56,16 +57,16 @@ public class Cart {
     }
 
     private void recalculate() {
-        totalPrice = 0.0;
+        totalPrice = new BigDecimal("0.0");
 
         for (CartItem item :
                 items) {
-            totalPrice += item.getTotalPrice();
+            totalPrice = totalPrice.add(item.getTotalPrice());
         }
     }
 
     public void clear() {
         items.clear();
-        totalPrice = 0.0;
+        totalPrice = new BigDecimal("0.0");
     }
 }

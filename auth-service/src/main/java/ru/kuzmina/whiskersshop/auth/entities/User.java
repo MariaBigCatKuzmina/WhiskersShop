@@ -1,6 +1,9 @@
-package ru.kuzmina.whiskersshop.model;
+package ru.kuzmina.whiskersshop.auth.entities;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package ru.kuzmina.whiskersshop.config;
+package ru.kuzmina.whiskersshop.auth.configs;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.kuzmina.whiskersshop.utils.JwtTokenUtil;
+import ru.kuzmina.whiskersshop.auth.utils.JwtTokenUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

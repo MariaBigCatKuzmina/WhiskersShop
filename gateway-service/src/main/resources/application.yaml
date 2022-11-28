@@ -1,0 +1,44 @@
+server:
+  port: 5555
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+            allowedHeaders: "*"
+      routes:
+        - id: core-service
+          uri: http://localhost:8189
+          predicates:
+            - Path=/core/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/whiskers-petshop-core
+            - JwtAuthFilter
+        - id: cart-service
+          uri: http://localhost:8190
+          predicates:
+            - Path=/cart/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/whiskers-petshop-carts
+            - JwtAuthFilter
+        - id: auth-service
+          uri: http://localhost:8188
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/whiskers-petshop-auth
+            - JwtAuthFilter
+
+jwt:
+  secret: ju78mel13mm98nielo9387bk3928jd86tlj551mnb88knccj9jbt63n0q3b7rm4iqm

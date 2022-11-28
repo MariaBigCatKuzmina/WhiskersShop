@@ -1,8 +1,8 @@
-package ru.kuzmina.whiskersshop.repositories;
+package ru.kuzmina.whiskersshop.auth.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.kuzmina.whiskersshop.model.User;
+import ru.kuzmina.whiskersshop.auth.entities.User;
 
 import java.util.Optional;
 

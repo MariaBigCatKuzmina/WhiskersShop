@@ -85,8 +85,21 @@
     <div class="text-center mt-5">
         <h1>"Whiskers" - интернет магазин товаров для животных</h1>
     </div>
-    <p></p>
+
     <h3>Список товаров</h3>
+
+    <div class ="container mb-10">
+        <form class="d-flex" ng-submit="filterProducts()">
+            <input class="form-control me-2" id="titleFilter" name="titleFilter" type="text" placeholder="наименование"
+                   ng-model="titleFilter">
+            <input class="form-control me-2" id="minPriceFilter" name="minPriceFilter" type="text" placeholder="мин. цена"
+                   ng-model="minPriceFilter">
+            <input class="form-control me-2" id="maxPriceFilter" name="maxPriceFilter" type="text" placeholder="макс. цена"
+                   ng-model="maxPriceFilter">
+            <button id="filter" class="form-control btn btn-outline-warning btn-sm " type="submit">Фильтр</button>
+        </form>
+    </div>
+
     <table class="table table-hover">
         <tr>
             <td>ИД</td>
@@ -99,7 +112,6 @@
         <tr ng-repeat="p in productsList">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
-            order_items
             <td>{{p.description}}</td>
             <td>{{p.price}}</td>
             <td>
@@ -113,7 +125,7 @@
         </tr>
         </tbody>
     </table>
-<!--   {{$scope.orderList}}-->
+
     <div class="mt-5">
         <h3>
             Корзина

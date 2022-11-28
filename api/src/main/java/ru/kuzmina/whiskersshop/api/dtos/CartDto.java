@@ -1,10 +1,11 @@
 package ru.kuzmina.whiskersshop.api.dtos;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CartDto {
     private List<CartItemDto> items;
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     public List<CartItemDto> getItems() {
         return items;
@@ -14,11 +15,11 @@ public class CartDto {
         this.items = items;
     }
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

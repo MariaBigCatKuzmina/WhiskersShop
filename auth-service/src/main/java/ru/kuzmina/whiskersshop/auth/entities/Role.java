@@ -1,4 +1,4 @@
-package ru.kuzmina.whiskersshop.model;
+package ru.kuzmina.whiskersshop.auth.entities;
 
 import lombok.Data;
 
