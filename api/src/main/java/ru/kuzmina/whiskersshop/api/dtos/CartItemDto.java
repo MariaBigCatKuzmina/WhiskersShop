@@ -48,4 +48,14 @@ public class CartItemDto {
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    public CartItemDto(String productTitle, Integer quantity, BigDecimal productPrice, BigDecimal totalPrice) {
+        this.productTitle = productTitle;
+        this.quantity = quantity;
+        this.productPrice = productPrice;
+        this.totalPrice = totalPrice;
+    }
+
+    public CartItemDto() {
+    }
 }

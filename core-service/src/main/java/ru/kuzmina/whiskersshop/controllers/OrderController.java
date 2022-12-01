@@ -13,7 +13,6 @@ import ru.kuzmina.whiskersshop.services.OrderService;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/orders")
 @Slf4j
-//@CrossOrigin("*")
 
 public class OrderController {
     private final OrderService orderService;
@@ -21,7 +20,7 @@ public class OrderController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Long addOrder(@RequestHeader String username) {
-        return orderService.formOrder(username);
+        return orderService.formOrder(username).getId();
     }
 
 

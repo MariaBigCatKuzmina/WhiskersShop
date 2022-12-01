@@ -23,7 +23,7 @@ public class OrderService {
     private final CartServiceIntegration cartService;
 
     @Transactional
-    public Long formOrder(String username) {
+    public Order formOrder(String username) {
         Order order = new Order();
         CartDto currentCart = cartService.getCurrentCart();
         order.setUsername(username);
@@ -36,7 +36,7 @@ public class OrderService {
         order.setOrderItemsList(orderItems);
         orderRepository.save(order);
         cartService.clear();
-        return order.getId();
+        return order;
     }
 
     public List<Order> getAllOrders() {

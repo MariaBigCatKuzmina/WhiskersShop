@@ -8,7 +8,6 @@ import ru.kuzmina.whiskersshop.model.Product;
 import ru.kuzmina.whiskersshop.repositories.ProductRepository;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,20 +31,12 @@ public class ProductService {
     }
 
     public Product createNewProduct(ProductDto productDto){
-        Product product = new Product();
-        product = productConverter.dtoToEntity(productDto);
+        Product product = productConverter.dtoToEntity(productDto);
         product.setId(null);
-//        product.setTitle(productDto.getTitle());
-//        product.setDescription(productDto.getDescription());
-//        product.setPrice(productDto.getPrice());
-//        product.setCategory(categoryService.findByTitle(productDto.getCategoryTitle()).);
         return productRepository.save(product);
     }
 
     public List<Product> findAllAndFilter(String titleFilter, BigDecimal minPrice, BigDecimal maxPrice) {
-
-//        return productRepository.findAllByTitleLikeAndPriceBetween(titleFilter,minPrice,maxPrice);
         return productRepository.nsqlGetProductsByTitleLike("%"+titleFilter+"%", minPrice, maxPrice);
-//        return productRepository.findAllByTitleLike("%"+titleFilter+"%");
     }
 }
