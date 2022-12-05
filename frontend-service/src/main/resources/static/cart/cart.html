@@ -1,0 +1,48 @@
+<div>
+    <h3>
+        Корзина
+        <button type="button" class="btn btn-danger ms-2" ng-click="clearCart()" ng-disabled="isCartEmpty()">
+            Очистить
+        </button>
+        <button type="button" class="btn btn-success ms-2" ng-click="formOrder()" ng-disabled="isCartEmpty()">
+            Оформить заказ
+        </button>
+    </h3>
+    <table class="table table-hover">
+        <tr>
+            <td>ИД</td>
+            <td>Название</td>
+            <td>Количество</td>
+            <td>Цена</td>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="item in currentCart.items">
+            <td>{{item.productId}}</td>
+            <td>{{item.productTitle}}</td>
+            <td>
+                <button type="button" class="btn btn-light mr-2" ng-click="deleteProductFromCart(item.productId)">
+                    <i class="bi bi-dash"></i>
+                </button>
+                {{item.quantity}}
+                <button type="button" class="btn btn-light ml-2" ng-click="addProductToCart(item.productId)">
+                    <i class="bi bi-plus"></i>
+                </button>
+            </td>
+            <td>{{item.productPrice + 'x' + item.quantity + '=' + item.totalPrice}}</td>
+            <td>
+                <button type="button" class="btn btn-danger"
+                        ng-click="deleteAllProductsOfTypeFromCart(item.productId)">
+                    <i class="bi bi-x"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>Стоимость корзины:</td>
+            <td colspan="4" class="text-right">{{currentCart.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+

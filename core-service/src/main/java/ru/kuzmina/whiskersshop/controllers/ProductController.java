@@ -1,6 +1,8 @@
 package ru.kuzmina.whiskersshop.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 import ru.kuzmina.whiskersshop.api.dtos.ProductDto;
@@ -10,7 +12,6 @@ import ru.kuzmina.whiskersshop.services.ProductService;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -20,22 +21,19 @@ public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;
 
+
     @GetMapping
-    public List<ProductDto> findAllProducts() {
-        List<ProductDto> collect = productService.findAll().stream()
-                .map(productConverter::entityToDto)
-                .collect(Collectors.toList());
-        return collect;
-    }
-    @PostMapping("/filter")
-//    public List<ProductDto> getAllProductsAndFilter(@RequestBody(required = false) String title) {
-    public List<ProductDto> getAllProductsAndFilter(@RequestParam(name = "titleFilter", required = false) String titleFilter,
-                                                    @RequestParam(name = "minPriceFilter", required = false) BigDecimal minPriceFilter,
-                                                    @RequestParam(name = "maxPriceFilter", required = false) BigDecimal maxPriceFilter) {
-        List<ProductDto> collect = productService.findAllAndFilter(titleFilter, minPriceFilter, maxPriceFilter).stream()
-                .map(productConverter::entityToDto)
-                .collect(Collectors.toList());
-        return collect;
+    public Page<ProductDto> getProducts(
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "min_price", required = false) BigDecimal minPrice,
+            @RequestParam(name = "max_price", required = false) BigDecimal maxPrice,
+            @RequestParam(name = "page", defaultValue = "1" ) Integer page) {
+
+        if (page < 1) {
+            page = 1;
+        }
+        return productService.findAll(title, minPrice, maxPrice, page - 1)
+                .map(productConverter::entityToDto);
     }
 
     @GetMapping("/{id}")

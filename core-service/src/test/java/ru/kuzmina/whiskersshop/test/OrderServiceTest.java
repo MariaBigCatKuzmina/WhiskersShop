@@ -57,7 +57,7 @@ public class OrderServiceTest {
         product.setPrice(BigDecimal.valueOf(1500));
         product.setCategory(category);
 
-        Mockito.doReturn(cartDto).when(cartServiceIntegration).getCurrentCart();
+        Mockito.doReturn(cartDto).when(cartServiceIntegration).getCurrentCart("user_Alex");
         Mockito.doReturn(Optional.of(product)).when(productService).findById(12L);
         Order order = orderService.formOrder("user_Alex");
 

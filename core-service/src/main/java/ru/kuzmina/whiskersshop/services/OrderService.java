@@ -25,7 +25,7 @@ public class OrderService {
     @Transactional
     public Order formOrder(String username) {
         Order order = new Order();
-        CartDto currentCart = cartService.getCurrentCart();
+        CartDto currentCart = cartService.getCurrentCart(username);
         order.setUsername(username);
         order.setOrderPrice(currentCart.getTotalPrice());
         List<OrderItem> orderItems = currentCart.getItems()
@@ -35,7 +35,7 @@ public class OrderService {
                 .toList();
         order.setOrderItemsList(orderItems);
         orderRepository.save(order);
-        cartService.clear();
+        cartService.clear(username);
         return order;
     }
 
