@@ -1,0 +1,79 @@
+<div>
+
+    <h3>Список товаров</h3>
+
+    <div class="container mb-10">
+        <form class="d-flex" ng-submit="loadProducts()">
+            <input class="form-control me-2" id="titleFilter" name="title" type="text" placeholder="наименование"
+                   ng-model="title">
+            <input class="form-control me-2" id="minPriceFilter" name="min_price" type="text"
+                   placeholder="мин. цена"
+                   ng-model="min_price">
+            <input class="form-control me-2" id="maxPriceFilter" name="max_price" type="text"
+                   placeholder="макс. цена"
+                   ng-model="max_price">
+            <button id="filter" class="form-control btn btn-outline-warning btn-sm " type="submit">Фильтр</button>
+        </form>
+    </div>
+
+    <table class="table table-hover">
+        <tr>
+            <td>ИД</td>
+            <td>Название</td>
+            <td>Описание</td>
+            <td>Цена</td>
+            <td>...</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in productsPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.description}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-info me-2" ng-click="showProductInfo(p.id)">
+                    <i class="bi bi-question"></i>
+                </button>
+                <button type="button" class="btn btn-success ms-2" ng-click="addProductToCart(p.id)">
+                    <i class="bi bi-cart-plus"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item">
+                <!--            <li class="page-item" ng-disabled="productsPage.number===0">-->
+                <!--                <a class="page-link" href="" tabindex="-1"-->
+                <!--                   ng-click="pagedProducts(productsPage.number)">Previous</a>-->
+                <button type="button" class="btn btn-outline-dark" ng-disabled="productsPage.first"
+                        ng-click="pagedProducts(productsPage.number)">
+                    Prev.
+                </button>
+            </li>
+            <li class="page-item" ng-repeat="num in pagesNumbersArray">
+                <button type="button" class="btn btn-outline-dark" ng-class="{num: 'btn-outline-light'}[productsPage.number + 1]"
+                        ng-click="pagedProducts(num)">
+                    {{num}}
+                    <span class="sr-only" ng-if="num == productsPage.number + 1">(current)</span>
+
+                </button>
+                <!--                    <a class="page-link" href="" ng-click="pagedProducts(num)">-->
+                <!--                        {{num}}-->
+                <!--                    <span class="sr-only" ng-if="num == productsPage.number + 1">(current)</span>-->
+                <!--                </a>-->
+            </li>
+            <!--            <li class="page-item" >-->
+            <!--                <a class="page-link" href="" ng-disabled="productsPage.last" ng-click="pagedProducts(productsPage.number + 2)">Next</a>-->
+            <!--            </li>-->
+            <li>
+                <button type="button" class="btn btn-outline-dark" ng-disabled="productsPage.last"
+                        ng-click="pagedProducts(productsPage.number + 2)">
+                    Next
+                </button>
+            </li>
+
+        </ul>
+    </nav>
+</div>

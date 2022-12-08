@@ -3,41 +3,61 @@ package ru.kuzmina.whiskersshop.carts.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.kuzmina.whiskersshop.api.dtos.CartDto;
+import ru.kuzmina.whiskersshop.api.dtos.StringResponse;
 import ru.kuzmina.whiskersshop.carts.converters.CartConverter;
 import ru.kuzmina.whiskersshop.carts.services.CartService;
+
+import java.util.UUID;
 
 
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
-//@CrossOrigin("*")
 public class CartController {
     private final CartService cartService;
     private final CartConverter cartConverter;
 
-    @GetMapping
-    public CartDto getCurrent() {
-        return cartConverter.cartToDto(cartService.getCurrentCart());
+    @GetMapping("/generate")
+    public StringResponse generateUuid(){
+        return new StringResponse(UUID.randomUUID().toString());
+    }
+    @GetMapping("/{uuid}")
+    public CartDto getCurrent(@RequestHeader(required = false) String username,
+                              @PathVariable(name = "uuid") String uuid) {
+        return cartConverter.cartToDto(cartService.getCurrentCart(chooseUuid(username, uuid)));
     }
 
-    @GetMapping("/add/{id}")
-    public void addProductToCart(@PathVariable(name = "id") Long productId) {
-        cartService.add(productId);
+    @GetMapping("/{uuid}/add/{id}")
+    public void addProductToCart(@RequestHeader(required = false) String username,
+                                 @PathVariable(name = "uuid") String uuid,
+                                 @PathVariable(name = "id") Long productId) {
+        cartService.add(chooseUuid(username, uuid), productId);
     }
 
-    @GetMapping("/delete/{id}")
-    public void deleteProductFromCart(@PathVariable(name = "id") Long productId) {
-        cartService.decrease(productId);
+    @GetMapping("/{uuid}/delete/{id}")
+    public void deleteProductFromCart(@RequestHeader(required = false) String username,
+                                      @PathVariable(name = "uuid") String uuid,
+                                      @PathVariable(name = "id") Long productId) {
+        cartService.decrease(chooseUuid(username, uuid), productId);
     }
 
-    @GetMapping("/delete/all/{id}")
-    public void deleteAllProductsById(@PathVariable Long id){
-        cartService.remove(id);
+    @GetMapping("/{uuid}/delete/all/{id}")
+    public void deleteAllProductsById(@RequestHeader(required = false) String username,
+                                      @PathVariable(name = "uuid") String uuid,
+                                      @PathVariable Long id){
+        cartService.remove(chooseUuid(username, uuid), id);
     }
 
-    @GetMapping("/clear")
-    public void clearCart() {
-        cartService.clear();
+    @GetMapping("/{uuid}/clear")
+    public void clearCart(@RequestHeader(required = false) String username,
+                          @PathVariable(name = "uuid") String uuid) {
+        cartService.clear(chooseUuid(username, uuid));
     }
 
+    private String chooseUuid(String username, String uuid){
+        if (username != null){
+            return username;
+        }
+        return uuid;
+    }
 }
