@@ -3,8 +3,10 @@ package ru.kuzmina.whiskersshop.controllers;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.kuzmina.whiskersshop.api.dtos.OrderDto;
 import ru.kuzmina.whiskersshop.services.OrderService;
 
 
@@ -23,5 +25,9 @@ public class OrderController {
         return orderService.formOrder(username).getId();
     }
 
+    @GetMapping
+    public Page<OrderDto> getOrders(@RequestHeader String username){
 
+        return orderService.getOrdersForUser(username, 0);
+    }
 }

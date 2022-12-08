@@ -5,15 +5,6 @@ angular.module('whiskers-shop').controller('storeController', function ($scope, 
     const cartPath = 'http://localhost:5555/cart';
 
     $scope.loadProducts = function () {
-        // if ($scope.title === undefined) {
-        //     $scope.title = "";
-        // }
-        // if ($scope.min_price === undefined) {
-        //     $scope.min_price = "";
-        // }
-        // if ($scope.max_price === undefined) {
-        //     $scope.max_price = "";
-        // }
 
         $http.get(contextPath + productsPath, {
             params: {
@@ -21,7 +12,6 @@ angular.module('whiskers-shop').controller('storeController', function ($scope, 
                 min_price: $scope.min_price,
                 max_price: $scope.max_price,
                 page: $scope.page
-                // page: 2
             }
         })
             .then(function (response) {
@@ -31,8 +21,6 @@ angular.module('whiskers-shop').controller('storeController', function ($scope, 
     };
 
     $scope.pagedProducts = function (pageNum) {
-        console.log($scope.productsPage.first);
-        console.log($scope.productsPage.last);
         $scope.page = pageNum;
         $scope.loadProducts();
 
@@ -74,7 +62,7 @@ angular.module('whiskers-shop').controller('storeController', function ($scope, 
             .then(function () {
                 $rootScope.getCartProducts();
             }).catch(function (err) {
-            console.log(err.toString())
+            console.log(err.message)
         });
     };
 

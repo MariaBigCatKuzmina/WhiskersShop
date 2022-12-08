@@ -1,5 +1,6 @@
 package ru.kuzmina.whiskersshop.carts.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 import ru.kuzmina.whiskersshop.api.dtos.ProductDto;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Cart {
     private List<CartItem> items;
     private BigDecimal totalPrice;
@@ -15,11 +17,6 @@ public class Cart {
     public Cart() {
         this.items = new ArrayList<>();
         totalPrice = BigDecimal.ZERO;
-    }
-
-
-    public List<CartItem> getItems() {
-        return Collections.unmodifiableList(items);
     }
 
     public void add(ProductDto product) {
@@ -69,5 +66,23 @@ public class Cart {
     public void clear() {
         items.clear();
         totalPrice = BigDecimal.ZERO;
+    }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
+
+    public void mergeCart(Cart cartToMerge) {
+        //items.addAll(cartToMerge.getItems());
+        cartToMerge.getItems().forEach(mergeItem -> {
+            Optional<CartItem> currentCartItem = findById(mergeItem.getProductId());
+            if(currentCartItem.isPresent()){
+                currentCartItem.get().changeQuantity(mergeItem.getQuantity());
+            } else {
+                items.add(new CartItem(mergeItem.getProductId(), mergeItem.getProductTitle(), 1,
+                        mergeItem.getProductPrice(), mergeItem.getTotalPrice()));
+            }
+            recalculate();
+        });
     }
 }

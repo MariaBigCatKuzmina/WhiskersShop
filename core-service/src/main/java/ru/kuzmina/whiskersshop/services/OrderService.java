@@ -2,8 +2,12 @@ package ru.kuzmina.whiskersshop.services;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.kuzmina.whiskersshop.api.dtos.CartDto;
+import ru.kuzmina.whiskersshop.api.dtos.OrderDto;
+import ru.kuzmina.whiskersshop.converters.OrderConverter;
 import ru.kuzmina.whiskersshop.integrations.CartServiceIntegration;
 import ru.kuzmina.whiskersshop.model.Order;
 import ru.kuzmina.whiskersshop.model.OrderItem;
@@ -21,6 +25,7 @@ public class OrderService {
     private final ProductService productService;
     private final OrderItemService orderDetailService;
     private final CartServiceIntegration cartService;
+    private final OrderConverter orderConverter;
 
     @Transactional
     public Order formOrder(String username) {
@@ -39,7 +44,7 @@ public class OrderService {
         return order;
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public Page<OrderDto> getOrdersForUser(String username, int page) {
+        return orderRepository.findByUsername(username, PageRequest.of(page, 5)).map(orderConverter::entityToDto);
     }
 }
