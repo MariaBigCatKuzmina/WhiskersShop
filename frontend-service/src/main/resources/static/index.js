@@ -18,6 +18,9 @@
             .when('/orders', {
                 templateUrl: 'orders/orders.html', controller: 'orderController'
             })
+            .when('/register', {
+                templateUrl: 'registration/register.html', controller: 'registerController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -47,16 +50,15 @@
                 })
 
         }
-     }
+        console.log($localStorage.whiskersPetShopGuestCartId);
+    }
 })();
 angular
     .module('whiskers-shop')
     .controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
-    const corePath = 'http://localhost:5555/core';
     const authPath = 'http://localhost:5555/auth'
     const cartPath = 'http://localhost:5555/cart';
     const apiVersion = '/api/v1';
-    const productsPath = apiVersion + '/products';
 
     $scope.tryToAuth = function () {
         $http.post(authPath + '/auth', $scope.user)
@@ -67,6 +69,10 @@ angular
 
                     $scope.user.username = null;
                     $scope.user.password = null;
+                    console.log($localStorage.whiskersPetShopGuestCartId);
+
+                    $http.get(cartPath + apiVersion + "/cart/" + $localStorage.whiskersPetShopGuestCartId + "/merge");
+
                     $location.path('/');
                 }
             }, function errorCallback(response) {

@@ -7,7 +7,7 @@ public class OrderDto {
     private Long id;
     private BigDecimal orderPrice;
     private String username;
-    private List<OrderItemDto> orderItemsList;
+    private List<OrderItemDto> orderItems;
 
     public Long getId() {
         return id;
@@ -33,20 +33,20 @@ public class OrderDto {
         this.username = username;
     }
 
-    public List<OrderItemDto> getOrderItemsList() {
-        return orderItemsList;
+    public List<OrderItemDto> getOrderItems() {
+        return orderItems;
     }
 
-    public void setOrderItemsList(List<OrderItemDto> orderItemsList) {
-        this.orderItemsList = orderItemsList;
+    public void setOrderItems(List<OrderItemDto> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    public OrderDto(BigDecimal orderPrice, String username, List<OrderItemDto> orderItemsList) {
+    public OrderDto(BigDecimal orderPrice, String username, List<OrderItemDto> orderItems) {
         this.orderPrice = orderPrice;
         this.username = username;
-        this.orderItemsList = orderItemsList;
+        this.orderItems = orderItems;
     }
 
-    public OrderDto() {
+    public OrderDto() { 
     }
 }

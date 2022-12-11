@@ -6,7 +6,7 @@ import ru.kuzmina.whiskersshop.carts.model.CartItem;
 
 @Component
 public class CartItemConverter  {
-    public CartItemDto cartItemToDto(CartItem cartItem) {
+    public CartItemDto entityToDto(CartItem cartItem) {
          CartItemDto cartItemDto = new CartItemDto();
          cartItemDto.setProductId(cartItem.getProductId());
          cartItemDto.setProductTitle(cartItem.getProductTitle());

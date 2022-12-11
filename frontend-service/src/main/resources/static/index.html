@@ -34,32 +34,60 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="#!/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#!/store">Каталог</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#!/cart">Корзина</a>
+                    <li class="nav-item border">
+                        <a class="nav-link active" href="#!/store"><i class="bi bi-list-ul me-2 ms-2"></i>Каталог</a>
                     </li>
                 </ul>
                 <div class="d-flex me-3" title="Мои заказы" ng-show="ifUserLoggedIn()">
-                    <div class="d-flex" style="padding: 4px">
-                        <button id="getOrders" class="btn btn-outline-info btn-sm"
-                                style="padding: 4px" ng-click="getOrderList()">
-                            <i class="bi bi-box-seam"></i>
-                        </button>
-                    </div>
+                    <a class="nav-link active" aria-current="page" href="#!/orders">
+                        <div>
+                            <!--                        <div class="d-flex" style="padding: 4px">-->
+                            <!--                            <button id="getOrders" class="btn btn-outline-info btn-sm"-->
+                            <!--                                    style="padding: 4px" >-->
+                            <i class="bi bi-box-seam" alt="мои заказы"></i>
+                            <!--                            </button>-->
+                        </div>
+                    </a>
                 </div>
-                <form class="d-flex" ng-submit="tryToAuth()" ng-show="!ifUserLoggedIn()">
-                    <input id="navLoginField" autocomplete="username" class="form-control me-2" type="text"
-                           aria-describedby="inputGroup-sizing-sm" placeholder="username"
-                           style="padding: 4px" ng-model="user.username">
-                    <input id="navPasswordField" autocomplete="current-password" class="form-control me-2"
-                           type="password" aria-describedby="inputGroup-sizing-sm" placeholder="password"
-                           style="padding: 4px" ng-model="user.password">
-                    <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
-                            style="padding: 4px" type="submit">Войти
-                    </button>
-                </form>
+                <div class="d-flex me-3" title="Корзина">
+                    <a class="nav-link active" aria-current="page" href="#!/cart">
+                        <div>
+                            <!--                        <div class="d-flex" style="padding: 4px">-->
+                            <!--                            <button id="getOrders" class="btn btn-outline-info btn-sm"-->
+                            <!--                                    style="padding: 4px" >-->
+                            <i class="bi bi-basket" alt="Коризина"></i>
+                            <!--                            </button>-->
+                        </div>
+
+                    </a>
+                </div>
+                <div>
+                    <form class="d-flex" ng-submit="tryToAuth()" ng-show="!ifUserLoggedIn()">
+                        <input id="navLoginField" autocomplete="username" class="form-control me-2" type="text"
+                               aria-describedby="inputGroup-sizing-sm" placeholder="username"
+                               style="padding: 4px" ng-model="user.username">
+                        <input id="navPasswordField" autocomplete="current-password" class="form-control me-2"
+                               type="password" aria-describedby="inputGroup-sizing-sm" placeholder="password"
+                               style="padding: 4px" ng-model="user.password">
+                        <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
+                                style="padding: 4px" type="submit">Войти
+                        </button>
+                    </form>
+                </div>
+<!--                <div class="d-flex" style="padding: 4px" ng-show="!ifUserLoggedIn()">-->
+<!--                    <a class="nav-link active" aria-current="page" href="#!/register">-->
+<!--                        Зарегистрироваться-->
+<!--                    </a>-->
+<!--                </div>-->
+                <div class="d-flex" style="padding: 4px" ng-show="!ifUserLoggedIn()">
+                        <button id="navRegister" class="btn btn-outline-warning btn-sm"
+                            style="padding: 4px" >
+<!--                            ng-click="goToRegistrationForm()">-->
+                            <a class="nav-link active" aria-current="page" href="#!/register">
+                            Зарегистрироваться
+                            </a>
+                        </button>
+                </div>
                 <div class="d-flex" ng-show="ifUserLoggedIn()" style="padding: 4px">
                     <button id="navLogout" class="btn btn-outline-warning btn-sm"
                             style="padding: 4px" ng-click="tryToLogout()">Выйти
@@ -77,8 +105,9 @@
     <script src="index.js"></script>
     <script src="store/store.js"></script>
     <script src="cart/cart.js"></script>
+    <script src="orders/orders.js"></script>
     <script src="welcome/welcome.js"></script>
-
+    <script src="registration/register.js"></script>
 </div>
 </body>
 </html>
