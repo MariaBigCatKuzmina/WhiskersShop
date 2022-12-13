@@ -47,4 +47,8 @@ public class OrderService {
     public Page<OrderDto> getOrdersForUser(String username, int page) {
         return orderRepository.findByUsername(username, PageRequest.of(page, 5)).map(orderConverter::entityToDto);
     }
+
+    public OrderDto getOrderByIdForUser(String username, Long id) {
+         return orderConverter.entityToDto(orderRepository.findOrderByIdAndUsername(id, username));
+    }
 }
