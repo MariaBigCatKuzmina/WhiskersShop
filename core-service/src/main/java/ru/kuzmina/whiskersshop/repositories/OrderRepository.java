@@ -11,4 +11,6 @@ import ru.kuzmina.whiskersshop.model.Order;
 public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecificationExecutor<Order> {
     Page<Order> findByUsername(String username,
                                Pageable pageable);
+
+    Order findOrderByIdAndUsername(Long id, String username);
 }

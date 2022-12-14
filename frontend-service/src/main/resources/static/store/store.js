@@ -35,9 +35,7 @@ angular.module('whiskers-shop').controller('storeController', function ($scope, 
         let min = currentPageNumber - offset <= 0 ? 1 : currentPageNumber - offset + 1;
 
         if (max - min < visibleElementsCount - 1) {
-            if (min === 1) {
-                max = visibleElementsCount;
-            } else {
+            if (min > 1) {
                 min = max - visibleElementsCount + 1;
             }
         }

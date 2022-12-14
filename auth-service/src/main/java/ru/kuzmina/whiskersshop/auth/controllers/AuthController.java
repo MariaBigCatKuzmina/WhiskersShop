@@ -35,6 +35,7 @@ public class AuthController {
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationUserDto userDto) {
         if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {

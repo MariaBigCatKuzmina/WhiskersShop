@@ -96,6 +96,13 @@
             <artifactId>wsdl4j</artifactId>
             <version>1.6.2</version>
         </dependency>
+<!--     для подключения swagger-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+
 
         <dependency>
             <groupId>ru.kuzmina.whiskersshop</groupId>

@@ -8,11 +8,11 @@ spring:
     show-sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/whiskers_petshop_users?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3309/users-db?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: admin
 volumes:
-  my-db:
+  users-db:
 
 jwt:
   secret: ju78mel13mm98nielo9387bk3928jd86tlj551mnb88knccj9jbt63n0q3b7rm4iqm

@@ -5,7 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "admin"
     ports:
-      - "3306:3306"
+      - "3309:3306"
     volumes:
       - users-db:/var/lib/mysql
 volumes:

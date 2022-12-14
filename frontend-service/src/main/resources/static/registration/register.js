@@ -7,6 +7,7 @@ angular.module('whiskers-shop')
             console.log('reg form open');
             $location.path('/register');
         }
+
         $scope.registerNewUser = function () {
             $http.post(contextPath + '/register', $scope.regUser).then(function (response) {
                 if (response.data.token) {
