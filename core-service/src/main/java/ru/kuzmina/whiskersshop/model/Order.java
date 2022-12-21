@@ -29,7 +29,7 @@ public class Order {
     @Column(name = "username")
     private String username;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST )
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     @ToString.Exclude
     private List<OrderItem> orderItemsList;
 

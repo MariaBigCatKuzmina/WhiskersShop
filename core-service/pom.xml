@@ -103,7 +103,11 @@
             <version>1.6.9</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.paypal.sdk</groupId>
+            <artifactId>checkout-sdk</artifactId>
+            <version>1.0.5</version>
+        </dependency>
         <dependency>
             <groupId>ru.kuzmina.whiskersshop</groupId>
             <artifactId>api</artifactId>

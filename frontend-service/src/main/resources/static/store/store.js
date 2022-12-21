@@ -55,15 +55,6 @@ angular.module('whiskers-shop').controller('storeController', function ($scope, 
         })
     };
 
-    $scope.addProductToCart = function (id) {
-        $http.get(cartPath + apiVersion + '/cart/' + $localStorage.whiskersPetShopGuestCartId + '/add/' + id)
-            .then(function () {
-                $rootScope.getCartProducts();
-            }).catch(function (err) {
-            console.log(err.message)
-        });
-    };
-
     $scope.loadProducts();
 
 });

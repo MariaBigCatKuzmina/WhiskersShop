@@ -6,7 +6,10 @@ import ru.kuzmina.whiskersshop.api.ResourceNotFoundException;
 import ru.kuzmina.whiskersshop.api.dtos.ProductDto;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,13 +22,13 @@ public class Cart {
         totalPrice = BigDecimal.ZERO;
     }
 
-    public void add(ProductDto product) {
-        Optional<CartItem> item = findById(product.getId());
-        if (item.isPresent()) {
-            item.get().changeQuantity(1);
-        } else {
-            items.add(new CartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
-        }
+    public void addNew(ProductDto product) {
+        items.add(new CartItem(product.getId(), product.getTitle(), 1, product.getPrice(), product.getPrice()));
+        recalculate();
+    }
+
+    public void increase(CartItem cartItem) {
+        cartItem.changeQuantity(1);
         recalculate();
     }
 
@@ -45,7 +48,7 @@ public class Cart {
         }
     }
 
-    private Optional<CartItem> findById(Long productId) {
+    public Optional<CartItem> findById(Long productId) {
         for (CartItem item : items) {
             if (Objects.equals(item.getProductId(), productId)) {
                 return Optional.of(item);
@@ -73,10 +76,9 @@ public class Cart {
     }
 
     public void mergeCart(Cart cartToMerge) {
-        //items.addAll(cartToMerge.getItems());
         cartToMerge.getItems().forEach(mergeItem -> {
             Optional<CartItem> currentCartItem = findById(mergeItem.getProductId());
-            if(currentCartItem.isPresent()){
+            if (currentCartItem.isPresent()) {
                 currentCartItem.get().changeQuantity(mergeItem.getQuantity());
             } else {
                 items.add(new CartItem(mergeItem.getProductId(), mergeItem.getProductTitle(), 1,
