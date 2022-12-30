@@ -11,6 +11,15 @@ angular.module('whiskers-shop')
                 });
         };
 
+        $rootScope.addProductToCart = function (id) {
+            $http.get(contextPath + apiVersion + '/cart/' + $localStorage.whiskersPetShopGuestCartId + '/add/' + id)
+                .then(function () {
+                    $rootScope.getCartProducts();
+                }).catch(function (err) {
+                console.log(err.message)
+            });
+        };
+
         $scope.deleteProductFromCart = function (id) {
             $http.get(contextPath + apiVersion + '/cart/' + $localStorage.whiskersPetShopGuestCartId + '/delete/' + id)
                 .then(function () {

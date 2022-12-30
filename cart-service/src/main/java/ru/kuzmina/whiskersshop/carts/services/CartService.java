@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import ru.kuzmina.whiskersshop.api.dtos.ProductDto;
 import ru.kuzmina.whiskersshop.carts.integrations.ProductServiceIntegration;
 import ru.kuzmina.whiskersshop.carts.model.Cart;
+import ru.kuzmina.whiskersshop.carts.model.CartItem;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
@@ -29,8 +31,15 @@ public class CartService {
     }
 
     public void add(String uuid, Long productId) {
-        ProductDto product = productServiceIntegration.findById(productId);
-        execute(uuid, cart -> cart.add(product));
+        execute(uuid, cart -> {
+            Optional<CartItem> cartItem = cart.findById(productId);
+            if (cartItem.isPresent()) {
+               cart.increase(cartItem.get());
+            } else {
+                ProductDto product = productServiceIntegration.findById(productId);
+                cart.addNew(product);
+            }
+        });
      }
 
     public void decrease(String uuid, Long id) {
