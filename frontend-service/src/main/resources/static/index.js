@@ -65,7 +65,7 @@ angular
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-                    $localStorage.petshopWebuser = {username: $scope.user.username, token: response.data.token};
+                    $localStorage.petshopWebuser = {username: $scope.user.username, token: response.data.token, role: response.data.role};
 
                     $scope.user.username = null;
                     $scope.user.password = null;
