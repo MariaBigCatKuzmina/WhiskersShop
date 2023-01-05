@@ -2,6 +2,7 @@ package ru.kuzmina.whiskersshop.api.dtos;
 
 public class JwtResponse {
     private String token;
+    private String role;
 
     public String getToken() {
         return token;
