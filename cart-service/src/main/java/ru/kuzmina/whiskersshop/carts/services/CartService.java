@@ -24,7 +24,7 @@ public class CartService {
 
     public Cart getCurrentCart(String uuid) {
         String targetUuid = cartPrefix + uuid;
-        if (!redisTemplate.hasKey(targetUuid)) {
+        if (Boolean.FALSE.equals(redisTemplate.hasKey(targetUuid))) {
             redisTemplate.opsForValue().set(targetUuid, new Cart());
         }
         return (Cart) redisTemplate.opsForValue().get(targetUuid);
@@ -34,20 +34,20 @@ public class CartService {
         execute(uuid, cart -> {
             Optional<CartItem> cartItem = cart.findById(productId);
             if (cartItem.isPresent()) {
-               cart.increase(cartItem.get());
+                cart.increase(cartItem.get());
             } else {
                 ProductDto product = productServiceIntegration.findById(productId);
                 cart.addNew(product);
             }
         });
-     }
+    }
 
     public void decrease(String uuid, Long id) {
         execute(uuid, cart -> cart.decrease(id));
     }
 
     public void remove(String uuid, Long id) {
-        execute(uuid, cart -> cart.remove(id)); ;
+        execute(uuid, cart -> cart.remove(id));
     }
 
     public void clear(String uuid) {
@@ -63,8 +63,8 @@ public class CartService {
     public void mergeCarts(String uuid, String username) {
         Cart currentCart = getCurrentCart(uuid);
         if (!currentCart.isEmpty()) {
-           execute(username, cart -> cart.mergeCart(currentCart));
-           execute(uuid, Cart::clear);
+            execute(username, cart -> cart.mergeCart(currentCart));
+            execute(uuid, Cart::clear);
         }
     }
 }
