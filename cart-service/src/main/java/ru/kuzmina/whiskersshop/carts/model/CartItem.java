@@ -3,8 +3,6 @@ package ru.kuzmina.whiskersshop.carts.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.kuzmina.whiskersshop.carts.builders.CartItemBuilder;
-
 import java.math.BigDecimal;
 
 @Data
