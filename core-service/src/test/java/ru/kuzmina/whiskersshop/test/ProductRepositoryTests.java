@@ -47,7 +47,7 @@ public class ProductRepositoryTests {
 
         Assertions.assertEquals(4, allProducts.size());
 
-        allProducts = productRepository.nsqlGetProductsByTitleLike(null, null, BigDecimal.valueOf(1000));
+        allProducts = productRepository.nSqlGetProductsByTitleLike(null, null, BigDecimal.valueOf(1000));
         Assertions.assertEquals(1, allProducts.size());
     }
 

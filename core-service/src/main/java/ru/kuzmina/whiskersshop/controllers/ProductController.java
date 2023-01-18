@@ -27,7 +27,6 @@ public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;
 
-
     @Operation(
             summary = "Получение отфильтрованных страниц с товарами",
             responses = {
@@ -48,7 +47,7 @@ public class ProductController {
             @RequestParam(name = "title", required = false) String title,
             @RequestParam(name = "min_price", required = false) BigDecimal minPrice,
             @RequestParam(name = "max_price", required = false) BigDecimal maxPrice,
-            @RequestParam(name = "page", defaultValue = "1" ) Integer page) {
+            @RequestParam(name = "page", defaultValue = "1") Integer page) {
 
         if (page < 1) {
             page = 1;

@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.kuzmina.whiskersshop.model.Product;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -18,6 +17,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
                     AND (price >= :minPrice or :minPrice IS NULL)
                     AND (price <= :maxPrice or :maxPrice IS NULL)
             """, nativeQuery = true)
-    List<Product> nsqlGetProductsByTitleLike(String title, BigDecimal minPrice, BigDecimal maxPrice);
-
+    List<Product> nSqlGetProductsByTitleLike(String title, BigDecimal minPrice, BigDecimal maxPrice);
 }
