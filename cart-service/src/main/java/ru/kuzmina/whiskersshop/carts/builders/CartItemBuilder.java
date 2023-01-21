@@ -1,8 +1,6 @@
 package ru.kuzmina.whiskersshop.carts.builders;
 
-import ru.kuzmina.whiskersshop.carts.model.Cart;
 import ru.kuzmina.whiskersshop.carts.model.CartItem;
-
 import java.math.BigDecimal;
 
 public final class CartItemBuilder {
